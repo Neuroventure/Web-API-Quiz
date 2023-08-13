@@ -1,0 +1,20 @@
+*
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #0a0808c5;
+  --secondary: #8207a1;
+  --tertiary: rgb(211, 56, 144);
+  --white: rgb(255, 255, 255);
+  font-size: 62.5%;
+}
+
+body {
+  background: #ededed;
+  color: var(--secondary);
+  margin: 0;
+  padding: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
