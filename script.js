@@ -60,3 +60,84 @@ var questions = [
     choices: [{choice: '1. adding drama'}, {choice: '2. local storage'}, {choice: '3. online shopping'}, {choice: '4. naming a variable'}]
   },
 ];
+
+  //if go back button is hit on high score page
+  var renderStartPage = function () {
+    containerHighScoresEl.classList.add("hide")
+    containerHighScoresEl.classList.remove("show")
+    containerStartEl.classList.remove("hide")
+    containerStartEl.classList.add("show")
+    containerScoreEl.removeChild(containerScoreEl.lastChild)
+    QuestionIndex = 0
+    gameover = ""
+    timerEl.textContent = 0 
+    score = 0
+  
+    if (correctEl.className = "show") {
+        correctEl.classList.remove("show");
+        correctEl.classList.add("hide")
+    }
+    if (wrongEl.className = "show") {
+        wrongEl.classList.remove("show");
+        wrongEl.classList.add("hide");
+    }
+  }
+  
+  //every second, check if game-over is true, or if there is time left. Start time at 30. 
+  var setTime = function () {
+    timeleft = 30;
+  
+  var timercheck = setInterval(function() {
+    timerEl.innerText = timeleft;
+    timeleft--
+  
+    if (gameover) {
+        clearInterval(timercheck)
+    }
+   
+    if (timeleft < 0) {
+        showScore()
+        timerEl.innerText = 0
+        clearInterval(timercheck)
+    }
+  
+    }, 1000)
+  }
+  
+  var startGame = function() {
+    //add classes to show/hide start and quiz screen
+    containerStartEl.classList.add('hide');
+    containerStartEl.classList.remove('show');
+    containerQuestionEl.classList.remove('hide');
+    containerQuestionEl.classList.add('show');
+    //Shuffle the questions so they show in random order
+    arrayShuffledQuestions = questions.sort(() => Math.random() - 0.5)
+    setTime()
+    setQuestion()
+  }
+
+//set next question for quiz
+var setQuestion = function() {
+    resetAnswers()
+    displayQuestion(arrayShuffledQuestions[QuestionIndex])
+  } 
+
+  //remove answer buttons
+var resetAnswers = function() {
+    while (answerbuttonsEl.firstChild) {
+        answerbuttonsEl.removeChild(answerbuttonsEl.firstChild)
+    };
+  };
+  
+  //display question information (including answer buttons)
+  var displayQuestion = function(index) {
+    questionEl.innerText = index.q
+    for (var i = 0; i < index.choices.length; i++) {
+        var answerbutton = document.createElement('button')
+        answerbutton.innerText = index.choices[i].choice
+        answerbutton.classList.add('btn')
+        answerbutton.classList.add('answerbtn')
+        answerbutton.addEventListener("click", answerCheck)
+        answerbuttonsEl.appendChild(answerbutton)
+        }
+    };
